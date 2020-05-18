@@ -9,7 +9,6 @@ import org.junit.Test
 import truelayer.data.auth.domain.AccessToken
 import truelayer.data.auth.domain.ClientCredentials
 import truelayer.data.auth.domain.GrantType
-import truelayer.data.auth.rest.RestClientFactory
 
 class AuthenticatorTest {
 
