@@ -8,6 +8,8 @@ import truelayer.data.auth.domain.GrantType
 class Authenticator(private val restClient: RestClient) {
 
     fun retrieveToken(credentials: ClientCredentials): AccessToken {
-        return if (credentials.grantType.equals(GrantType.AUTHORIZATION_CODE)) restClient.retrieveToken(credentials) else throw IllegalArgumentException()
+        return if (areValid(credentials)) restClient.retrieveToken(credentials) else throw IllegalArgumentException()
     }
+
+    private fun areValid(credentials: ClientCredentials): Boolean = credentials.grantType.equals(GrantType.AUTHORIZATION_CODE)
 }
