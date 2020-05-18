@@ -41,5 +41,5 @@ class AuthenticatorTest {
 
     private fun buildSomeAuthorizationCredentials() = ClientCredentials(GrantType.AUTHORIZATION_CODE, "", "", "", "", "")
     private fun buildSomeRefreshCredentials() = ClientCredentials(GrantType.REFRESH_TOKEN, "", "", "", "", "")
-    private fun buildSomeAccessToken() = AccessToken("", "", "", "")
+    private fun buildSomeAccessToken() = AccessToken("", "", "", "", "")
 }
