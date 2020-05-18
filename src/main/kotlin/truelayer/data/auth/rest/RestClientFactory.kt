@@ -5,8 +5,8 @@ import main.kotlin.truelayer.client.data.rest.RestClient
 class RestClientFactory {
 
     companion object DefaultClient {
-        fun create(useSandbox : Boolean = false): RestClient{
-            return FuelRestClient(useSandbox)
+        fun create(restClientConfiguration: RestClientConfiguration): RestClient {
+            return FuelRestClient(restClientConfiguration)
         }
     }
 }
