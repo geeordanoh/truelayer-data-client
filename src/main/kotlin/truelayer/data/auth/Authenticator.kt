@@ -1,15 +1,21 @@
 package truelayer.data.auth
 
 import main.kotlin.truelayer.client.data.rest.RestClient
-import truelayer.data.auth.domain.AccessToken
-import truelayer.data.auth.domain.ClientCredentials
-import truelayer.data.auth.domain.GrantType
+import truelayer.data.auth.domain.*
 
-class Authenticator(private val restClient: RestClient) {
+class Authenticator(
+        private val clientCredentials: ClientCredentials,
+        private val restClient: RestClient) {
 
-    fun retrieveToken(credentials: ClientCredentials): AccessToken {
-        return if (areValid(credentials)) restClient.retrieveToken(credentials) else throw IllegalArgumentException()
+    fun retrieveToken(tokenRequestParameters: TokenRequestParameters): AccessToken {
+        return restClient.retrieveToken(clientCredentials, tokenRequestParameters)
     }
 
-    private fun areValid(credentials: ClientCredentials): Boolean = credentials.grantType.equals(GrantType.AUTHORIZATION_CODE)
+    fun refreshToken(tokenRefreshParameters: TokenRefreshParameters): AccessToken {
+        return restClient.refreshToken(clientCredentials, tokenRefreshParameters)
+    }
+
+    fun deleteToken(accessToken: AccessToken) {
+        return restClient.deleteToken(clientCredentials, accessToken)
+    }
 }

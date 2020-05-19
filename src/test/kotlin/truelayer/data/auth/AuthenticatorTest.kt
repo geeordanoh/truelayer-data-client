@@ -8,38 +8,55 @@ import org.junit.Before
 import org.junit.Test
 import truelayer.data.auth.domain.AccessToken
 import truelayer.data.auth.domain.ClientCredentials
-import truelayer.data.auth.domain.GrantType
+import truelayer.data.auth.domain.TokenRefreshParameters
+import truelayer.data.auth.domain.TokenRequestParameters
 
 class AuthenticatorTest {
 
     private lateinit var restClient: RestClient
     private lateinit var authenticator: Authenticator
+    private val credentials = buildSomeClientCredentials()
 
     @Before
     fun setUp() {
         restClient = mockk()
-        authenticator = Authenticator(restClient)
+        authenticator = Authenticator(credentials, restClient)
     }
 
     @Test
-    fun `retrieveToken`() {
-        val credentials = buildSomeAuthorizationCredentials()
-        every { restClient.retrieveToken(credentials) } returns buildSomeAccessToken()
+    fun `retrieve token`() {
+        val tokenRequestParameters = buildSomeTokenRequestParameters()
+        every { restClient.retrieveToken(credentials, tokenRequestParameters) } returns buildSomeAccessToken()
 
-        authenticator.retrieveToken(credentials)
+        authenticator.retrieveToken(tokenRequestParameters)
 
-        verify(exactly = 1) { restClient.retrieveToken(credentials) }
+        verify(exactly = 1) { restClient.retrieveToken(credentials, tokenRequestParameters) }
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun `wrongGrantType`() {
-        val credentials = buildSomeRefreshCredentials()
-        every { restClient.retrieveToken(credentials) } returns buildSomeAccessToken()
+    @Test
+    fun `refresh token`() {
+        val tokenRefreshParameters = buildSomeTokenRefreshParameters()
+        every { restClient.refreshToken(credentials, tokenRefreshParameters) } returns buildSomeAccessToken()
 
-        authenticator.retrieveToken(credentials)
+        authenticator.refreshToken(tokenRefreshParameters)
+
+        verify(exactly = 1) { restClient.refreshToken(credentials, tokenRefreshParameters) }
     }
 
-    private fun buildSomeAuthorizationCredentials() = ClientCredentials(GrantType.AUTHORIZATION_CODE, "", "", "", "", "")
-    private fun buildSomeRefreshCredentials() = ClientCredentials(GrantType.REFRESH_TOKEN, "", "", "", "", "")
+    @Test
+    fun `delete token`() {
+        val accessToken = buildSomeAccessToken()
+        val restClient = mockk<RestClient>(relaxed = true)
+        authenticator = Authenticator(credentials, restClient)
+
+        authenticator.deleteToken(accessToken)
+
+        verify(exactly = 1) { restClient.deleteToken(credentials, accessToken) }
+    }
+
+
+    private fun buildSomeClientCredentials() = ClientCredentials("", "")
+    private fun buildSomeTokenRefreshParameters() = TokenRefreshParameters("")
+    private fun buildSomeTokenRequestParameters() = TokenRequestParameters("", "", "")
     private fun buildSomeAccessToken() = AccessToken("", "", "", "", "")
 }
