@@ -13,15 +13,16 @@ private const val DELETE_TOKEN_URL = "api/delete"
 
 class FuelRestClient(restClientConfiguration: RestClientConfiguration) : RestClient {
 
+    private var fuelManager : FuelManager = FuelManager()
 
     init {
         if (restClientConfiguration.useSandbox)
-            FuelManager.instance.basePath = BASE_SANDBOX_URL
+            fuelManager.basePath = BASE_SANDBOX_URL
         else
-            FuelManager.instance.basePath = BASE_URL
+            fuelManager.basePath = BASE_URL
 
-        FuelManager.instance.timeoutReadInMillisecond = restClientConfiguration.timeoutReadInMillisecond
-        FuelManager.instance.timeoutInMillisecond = restClientConfiguration.timeoutInMillisecond
+        fuelManager.timeoutReadInMillisecond = restClientConfiguration.timeoutReadInMillisecond
+        fuelManager.timeoutInMillisecond = restClientConfiguration.timeoutInMillisecond
     }
 
     override fun retrieveToken(credentials: ClientCredentials, tokenRequestParameters: TokenRequestParameters): AccessToken {
@@ -50,12 +51,12 @@ class FuelRestClient(restClientConfiguration: RestClientConfiguration) : RestCli
     }
 
     private fun issueDeleteRequest(token: String) {
-        val (_, response, _) = FuelManager.instance.delete(DELETE_TOKEN_URL).header(Pair("Authorization", "Bearer $token")).response()
+        val (_, response, _) = fuelManager.delete(DELETE_TOKEN_URL).header(Pair("Authorization", "Bearer $token")).response()
         if (response.statusCode != 200) throw InvalidRequestException("Request failed with status code ${response.statusCode}")
     }
 
     private fun issuePostRequestWithUrlEncoding(request: List<Pair<String, String>>): AccessToken {
-        val (_, response, result) = FuelManager.instance.post(RETRIEVE_TOKEN_URL, request).responseObject<AccessToken>()
+        val (_, response, result) = fuelManager.post(RETRIEVE_TOKEN_URL, request).responseObject<AccessToken>()
         return result.fold<AccessToken>({ return it }, { throw InvalidRequestException("Request failed with status code ${response.statusCode}", it) })
     }
 }
