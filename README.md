@@ -1,5 +1,5 @@
-# TrueLayer Data API: JVM client library
-This is a Kotlin library for JVM applications (`Java`, `Kotlin`) to access [TrueLayer Data API](https://truelayer.com/data-api/) 
+# TrueLayer Data API
+This is a `Kotlin` library to access [TrueLayer Data API](https://truelayer.com/data-api/) 
 
 This is currently a work in progress.
 
