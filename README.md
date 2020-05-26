@@ -7,6 +7,7 @@ This is currently a work in progress.
 - Exchange code with access token
 - Delete/Invalidate access token
 - Renew the access token
+- CI
 ## Drafted:
 - Submit access token for debug
 - List of supported providers
@@ -30,5 +31,4 @@ This is currently a work in progress.
 - Retrieve regular expenditure
 
 - integration tests
-- CI
 - releases via jitpack
