@@ -49,7 +49,7 @@ class FuelRestClient(restClientConfiguration: RestClientConfiguration) : RestCli
     }
 
     override fun deleteToken(accessToken: AccessToken) {
-        issueDeleteRequest(DELETE_TOKEN_URL, accessToken.accessTokenJWT)
+        issueDeleteRequest(DELETE_TOKEN_URL, Pair("Authorization", "Bearer $accessToken.accessTokenJWT"))
     }
 
     override fun submitForDebug(accessToken: AccessToken): DebugCredentials {
@@ -60,14 +60,22 @@ class FuelRestClient(restClientConfiguration: RestClientConfiguration) : RestCli
     }
 
     override fun getProviders(): Providers {
-        val (_, response, result) = fuelManager.get(PROVIDERS_URL).responseObject<Providers>()
-        return result.fold<Providers>({ return it }, { throw InvalidRequestException("Request failed with status code ${response.statusCode}", it) })
+        return issueGetRequest(PROVIDERS_URL)
     }
 
-    private fun issueDeleteRequest(url: String, token: String) {
+    private inline fun <reified T : Any> issueGetRequest(url: String, vararg headers: Pair<String, String>): T {
+        val (_, response, result) = fuelManager
+                .get(url)
+                .header(*headers)
+                .responseObject<T>()
+        return result.fold<T>({ return it }, { throw InvalidRequestException("Request failed with status code ${response.statusCode}", it) })
+
+    }
+
+    private fun issueDeleteRequest(url: String, vararg headers: Pair<String, String>) {
         val (_, response, _) = fuelManager
                 .delete(url)
-                .header(Pair("Authorization", "Bearer $token"))
+                .header(*headers)
                 .response()
         if (response.statusCode != 200) throw InvalidRequestException("Request failed with status code ${response.statusCode}")
     }
