@@ -2,6 +2,10 @@ version: 2.1
 
 orbs:
   maven: circleci/maven@0.0.12
+  
+dependencies:
+  override:
+    - mvn -s settings.xml -DskipTests clean install
 
 workflows:
   maven_test:
