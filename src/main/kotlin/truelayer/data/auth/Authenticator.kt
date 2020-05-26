@@ -16,6 +16,10 @@ class Authenticator(
     }
 
     fun deleteToken(accessToken: AccessToken) {
-        return restClient.deleteToken(clientCredentials, accessToken)
+        return restClient.deleteToken(accessToken)
+    }
+
+    fun submitForDebug(accessToken: AccessToken): DebugCredentials {
+        return restClient.submitForDebug(accessToken)
     }
 }

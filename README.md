@@ -6,11 +6,11 @@ This is currently a work in progress.
 # Backlog
 ## Done:
 - Exchange code with access token
+- Delete/Invalidate access token
+- Renew the access token
 ## Drafted:
-- Delete encrypted credentials
-- Renew the access_token
-## Todo:
 - Submit access token for debug
+## Todo:
 - List of supported providers
 - Retrieve access_token metadata
 - Retrieve identity information
@@ -29,3 +29,7 @@ This is currently a work in progress.
 - Retrieve cards and accounts transactions with a single call
 - Retrieve income
 - Retrieve regular expenditure
+
+- integration tests
+- CI
+- releases via jitpack

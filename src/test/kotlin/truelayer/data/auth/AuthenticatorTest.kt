@@ -51,9 +51,19 @@ class AuthenticatorTest {
 
         authenticator.deleteToken(accessToken)
 
-        verify(exactly = 1) { restClient.deleteToken(credentials, accessToken) }
+        verify(exactly = 1) { restClient.deleteToken(accessToken) }
     }
 
+    @Test
+    fun `submit for debug`() {
+        val accessToken = buildSomeAccessToken()
+        val restClient = mockk<RestClient>(relaxed = true)
+        authenticator = Authenticator(credentials, restClient)
+
+        authenticator.submitForDebug(accessToken)
+
+        verify(exactly = 1) { restClient.submitForDebug(accessToken) }
+    }
 
     private fun buildSomeClientCredentials() = ClientCredentials("", "")
     private fun buildSomeTokenRefreshParameters() = TokenRefreshParameters("")
