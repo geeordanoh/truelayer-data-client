@@ -10,9 +10,6 @@ import truelayer.data.auth.domain.AccessToken
 import truelayer.data.auth.domain.ClientCredentials
 import truelayer.data.auth.domain.TokenRefreshParameters
 import truelayer.data.auth.domain.TokenRequestParameters
-import truelayer.data.auth.rest.RestClientConfiguration
-import truelayer.data.auth.rest.RestClientFactory
-import kotlin.test.assertNotNull
 
 class AuthenticatorTest {
 
