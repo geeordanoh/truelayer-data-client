@@ -7,7 +7,6 @@ dependencies:
   override:
     - mvn -s settings.xml -DskipTests clean install
 
-workflows:
-  maven_test:
-    jobs:
-      - maven/test # checkout, build, test, and upload test results
+test:
+  override:
+    - mvn verify
