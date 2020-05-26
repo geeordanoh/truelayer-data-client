@@ -1,6 +1,10 @@
 # TrueLayer Data API
 This is a `Kotlin` library to access [TrueLayer Data API](https://truelayer.com/data-api/) 
 
+# Template:
+[![geeordanoh](https://circleci.com/gh/geeordanoh/truelayer-data-client.svg?style=svg)](https://app.circleci.com/pipelines/github/geeordanoh/truelayer-data-client)
+
+
 This is currently a work in progress.
 
 # Backlog
