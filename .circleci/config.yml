@@ -3,10 +3,7 @@ version: 2.1
 orbs:
   maven: circleci/maven@0.0.12
   
-dependencies:
-  override:
-    - mvn -s settings.xml -DskipTests clean install
-
-test:
-  override:
-    - mvn verify
+jobs: # a collection of steps
+  build: # runs not using Workflows must have a `build` job as entry point
+    steps: # a collection of executable commands
+      - run: mvn -s settings.xml verify
