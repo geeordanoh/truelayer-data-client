@@ -1,6 +1,7 @@
 package main.kotlin.truelayer.client.data.rest
 
 import truelayer.data.auth.domain.*
+import truelayer.data.auth.domain.Providers
 
 interface RestClient {
 
@@ -8,5 +9,6 @@ interface RestClient {
     fun refreshToken(credentials: ClientCredentials, tokenRefreshParameters: TokenRefreshParameters): AccessToken
     fun deleteToken(accessToken: AccessToken)
     fun submitForDebug(accessToken: AccessToken): DebugCredentials
+    fun getProviders() : Providers
 }
 

@@ -10,8 +10,8 @@ This is currently a work in progress.
 - Renew the access token
 ## Drafted:
 - Submit access token for debug
-## Todo:
 - List of supported providers
+## Todo:
 - Retrieve access_token metadata
 - Retrieve identity information
 - List all accounts

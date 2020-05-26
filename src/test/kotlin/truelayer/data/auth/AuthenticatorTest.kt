@@ -10,6 +10,9 @@ import truelayer.data.auth.domain.AccessToken
 import truelayer.data.auth.domain.ClientCredentials
 import truelayer.data.auth.domain.TokenRefreshParameters
 import truelayer.data.auth.domain.TokenRequestParameters
+import truelayer.data.auth.rest.RestClientConfiguration
+import truelayer.data.auth.rest.RestClientFactory
+import kotlin.test.assertNotNull
 
 class AuthenticatorTest {
 
@@ -63,6 +66,16 @@ class AuthenticatorTest {
         authenticator.submitForDebug(accessToken)
 
         verify(exactly = 1) { restClient.submitForDebug(accessToken) }
+    }
+
+    @Test
+    fun `get providers list`() {
+        val restClient = mockk<RestClient>(relaxed = true)
+        authenticator = Authenticator(credentials, restClient)
+
+        authenticator.getProviders()
+
+        verify(exactly = 1) { restClient.getProviders() }
     }
 
     private fun buildSomeClientCredentials() = ClientCredentials("", "")

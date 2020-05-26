@@ -5,12 +5,13 @@ import com.github.kittinunf.fuel.jackson.responseObject
 import main.kotlin.truelayer.client.data.rest.RestClient
 import truelayer.data.auth.domain.*
 
+
 private const val BASE_URL = "https://auth.truelayer.com/"
 private const val BASE_SANDBOX_URL = "https://auth.truelayer-sandbox.com/"
 private const val RETRIEVE_TOKEN_URL = "connect/token"
 private const val DELETE_TOKEN_URL = "api/delete"
 private const val DEBUG_URL = "api/debug"
-
+private const val PROVIDERS_URL = "api/providers"
 
 class FuelRestClient(restClientConfiguration: RestClientConfiguration) : RestClient {
 
@@ -56,6 +57,11 @@ class FuelRestClient(restClientConfiguration: RestClientConfiguration) : RestCli
                 "access_token" to accessToken.accessTokenJWT
         )
         return this.issuePostRequestWithUrlEncoding(DEBUG_URL, request, Pair("Content-Type", "application/json"))
+    }
+
+    override fun getProviders(): Providers {
+        val (_, response, result) = fuelManager.get(PROVIDERS_URL).responseObject<Providers>()
+        return result.fold<Providers>({ return it }, { throw InvalidRequestException("Request failed with status code ${response.statusCode}", it) })
     }
 
     private fun issueDeleteRequest(url: String, token: String) {

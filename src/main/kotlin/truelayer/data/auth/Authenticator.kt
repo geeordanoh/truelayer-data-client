@@ -2,6 +2,7 @@ package truelayer.data.auth
 
 import main.kotlin.truelayer.client.data.rest.RestClient
 import truelayer.data.auth.domain.*
+import truelayer.data.auth.domain.Providers
 
 class Authenticator(
         private val clientCredentials: ClientCredentials,
@@ -21,5 +22,9 @@ class Authenticator(
 
     fun submitForDebug(accessToken: AccessToken): DebugCredentials {
         return restClient.submitForDebug(accessToken)
+    }
+
+    fun getProviders(): Providers {
+        return restClient.getProviders()
     }
 }
