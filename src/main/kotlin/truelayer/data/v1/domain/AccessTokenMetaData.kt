@@ -1,4 +1,4 @@
-package truelayer.data.auth.domain
+package truelayer.data.v1.domain
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

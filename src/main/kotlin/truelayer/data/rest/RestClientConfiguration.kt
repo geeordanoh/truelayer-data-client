@@ -1,4 +1,4 @@
-package truelayer.data.auth.rest
+package truelayer.data.rest
 
 data class RestClientConfiguration(
         val useSandbox: Boolean = false,

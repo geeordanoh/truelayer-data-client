@@ -3,50 +3,52 @@ package truelayer.data.auth
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import main.kotlin.truelayer.client.data.rest.RestClient
 import org.junit.Before
 import org.junit.Test
-import truelayer.data.auth.domain.AccessToken
-import truelayer.data.auth.domain.ClientCredentials
-import truelayer.data.auth.domain.TokenRefreshParameters
-import truelayer.data.auth.domain.TokenRequestParameters
+import truelayer.data.auth.domain.*
+import truelayer.data.rest.auth.AuthAPIClient
+import kotlin.test.assertEquals
 
 class AuthenticatorTest {
 
-    private lateinit var restClient: RestClient
+    private lateinit var authAPIClient: AuthAPIClient
     private lateinit var authenticator: Authenticator
     private val credentials = buildSomeClientCredentials()
 
     @Before
     fun setUp() {
-        restClient = mockk()
-        authenticator = Authenticator(credentials, restClient)
+        authAPIClient = mockk()
+        authenticator = Authenticator(credentials, authAPIClient)
     }
 
     @Test
     fun `retrieve token`() {
         val tokenRequestParameters = buildSomeTokenRequestParameters()
-        every { restClient.retrieveToken(credentials, tokenRequestParameters) } returns buildSomeAccessToken()
+        val accessToken = buildSomeAccessToken()
+        every { authAPIClient.retrieveToken(credentials, tokenRequestParameters) } returns accessToken
 
-        authenticator.retrieveToken(tokenRequestParameters)
+        val result = authenticator.retrieveToken(tokenRequestParameters)
 
-        verify(exactly = 1) { restClient.retrieveToken(credentials, tokenRequestParameters) }
+        verify(exactly = 1) { authAPIClient.retrieveToken(credentials, tokenRequestParameters) }
+        assertEquals(result, accessToken)
     }
 
     @Test
     fun `refresh token`() {
         val tokenRefreshParameters = buildSomeTokenRefreshParameters()
-        every { restClient.refreshToken(credentials, tokenRefreshParameters) } returns buildSomeAccessToken()
+        val accessToken = buildSomeAccessToken()
+        every { authAPIClient.refreshToken(credentials, tokenRefreshParameters) } returns accessToken
 
-        authenticator.refreshToken(tokenRefreshParameters)
+        val result = authenticator.refreshToken(tokenRefreshParameters)
 
-        verify(exactly = 1) { restClient.refreshToken(credentials, tokenRefreshParameters) }
+        verify(exactly = 1) { authAPIClient.refreshToken(credentials, tokenRefreshParameters) }
+        assertEquals(result, accessToken)
     }
 
     @Test
     fun `delete token`() {
         val accessToken = buildSomeAccessToken()
-        val restClient = mockk<RestClient>(relaxed = true)
+        val restClient = mockk<AuthAPIClient>(relaxed = true)
         authenticator = Authenticator(credentials, restClient)
 
         authenticator.deleteToken(accessToken)
@@ -57,37 +59,35 @@ class AuthenticatorTest {
     @Test
     fun `submit for debug`() {
         val accessToken = buildSomeAccessToken()
-        val restClient = mockk<RestClient>(relaxed = true)
-        authenticator = Authenticator(credentials, restClient)
+        val debugCredentials = buildSomeDebugCredentials()
+        every { authAPIClient.submitForDebug(accessToken) } returns debugCredentials
 
-        authenticator.submitForDebug(accessToken)
+        val result = authenticator.submitForDebug(accessToken)
 
-        verify(exactly = 1) { restClient.submitForDebug(accessToken) }
+        verify(exactly = 1) { authAPIClient.submitForDebug(accessToken) }
+        assertEquals(result, debugCredentials)
     }
 
     @Test
     fun `get providers list`() {
-        val restClient = mockk<RestClient>(relaxed = true)
-        authenticator = Authenticator(credentials, restClient)
+        val providers = buildSomeProviders()
+        every { authAPIClient.getProviders() } returns providers
 
-        authenticator.getProviders()
+        val result = authenticator.getProviders()
 
-        verify(exactly = 1) { restClient.getProviders() }
+        verify(exactly = 1) { authAPIClient.getProviders() }
+        assertEquals(result, providers)
     }
 
-    @Test
-    fun `get metadata`() {
-        val restClient = mockk<RestClient>(relaxed = true)
-        val accessToken = buildSomeAccessToken()
-        authenticator = Authenticator(credentials, restClient)
-
-        authenticator.getMetaDataFor(accessToken)
-
-        verify(exactly = 1) { restClient.getMetaDataFor(accessToken) }
-    }
 
     private fun buildSomeClientCredentials() = ClientCredentials("", "")
     private fun buildSomeTokenRefreshParameters() = TokenRefreshParameters("")
     private fun buildSomeTokenRequestParameters() = TokenRequestParameters("", "", "")
     private fun buildSomeAccessToken() = AccessToken("", "", "", "", "")
+    private fun buildSomeDebugCredentials() = DebugCredentials("", "", "")
+    private fun buildSomeProviders(): Providers{
+        val providers = Providers()
+        providers.add(ProvidersItem("","","","", listOf("")))
+        return providers
+    }
 }
