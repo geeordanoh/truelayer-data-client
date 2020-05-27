@@ -49,7 +49,7 @@ class FuelRestClient(restClientConfiguration: RestClientConfiguration) : AuthAPI
     }
 
     override fun delete(accessToken: AccessToken) {
-        issueDeleteRequest(fuelManager, DELETE_TOKEN_URL, Pair("Authorization", "Bearer $accessToken.accessTokenJWT"))
+        issueDeleteRequest(fuelManager, DELETE_TOKEN_URL, Pair("Authorization", "Bearer ${accessToken.accessTokenJWT}"))
     }
 
     override fun submitForDebug(accessToken: AccessToken): DebugCredentials {

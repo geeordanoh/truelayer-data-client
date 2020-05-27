@@ -62,5 +62,5 @@ class DataAPITest {
         assertEquals(result, accounts)
     }
 
-    private fun buildSomeAccessToken() = AccessToken("", "", "", "", "")
+    private fun buildSomeAccessToken() = AccessToken("", "", "", "")
 }

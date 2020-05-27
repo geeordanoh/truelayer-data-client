@@ -83,11 +83,11 @@ class AuthenticatorTest {
     private fun buildSomeClientCredentials() = ClientCredentials("", "")
     private fun buildSomeTokenRefreshParameters() = TokenRefreshParameters("")
     private fun buildSomeTokenRequestParameters() = TokenRequestParameters("", "", "")
-    private fun buildSomeAccessToken() = AccessToken("", "", "", "", "")
+    private fun buildSomeAccessToken() = AccessToken("", "", "", "")
     private fun buildSomeDebugCredentials() = DebugCredentials("", "", "")
-    private fun buildSomeProviders(): Providers{
+    private fun buildSomeProviders(): Providers {
         val providers = Providers()
-        providers.add(ProvidersItem("","","","", listOf("")))
+        providers.add(ProvidersItem("", "", "", "", listOf("")))
         return providers
     }
 }
