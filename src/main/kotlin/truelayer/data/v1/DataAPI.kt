@@ -3,6 +3,7 @@ package truelayer.data.v1
 import truelayer.data.auth.domain.AccessToken
 import truelayer.data.rest.v1.V1APIClient
 import truelayer.data.v1.domain.AccessTokenMetaData
+import truelayer.data.v1.domain.Accounts
 import truelayer.data.v1.domain.IdentityInfo
 
 class DataAPI(
@@ -14,5 +15,9 @@ class DataAPI(
 
     fun getIdentityInfo(accessToken: AccessToken): IdentityInfo {
         return V1APIClient.getIdentityInfo(accessToken)
+    }
+
+    fun getAccounts(accessToken: AccessToken): Accounts{
+        return V1APIClient.getAccounts(accessToken)
     }
 }

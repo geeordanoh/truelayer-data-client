@@ -13,8 +13,8 @@ This is currently a work in progress.
 - Submit access token for debug
 - Retrieve access_token metadata
 - Retrieve identity information
-## Todo:
 - List all accounts
+## Todo:
 - Retrieve an account
 - Retrieve account balance
 - Retrieve account transactions

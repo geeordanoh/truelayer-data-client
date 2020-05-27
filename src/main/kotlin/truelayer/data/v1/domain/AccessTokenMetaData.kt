@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class AccessTokenMetaData(
         @JsonProperty("results")
-        val infoResults: List<InfoResult>
+        val metaData: List<MetaData>
 )
 
-data class Result(
+data class MetaData(
         @JsonProperty("client_id")
         val clientId: String,
         @JsonProperty("consent_created_at")
@@ -27,13 +27,4 @@ data class Result(
         val provider: Provider,
         @JsonProperty("scopes")
         val scopes: List<String>
-)
-
-data class Provider(
-        @JsonProperty("display_name")
-        val displayName: String,
-        @JsonProperty("logo_uri")
-        val logoUri: String,
-        @JsonProperty("provider_id")
-        val providerId: String
 )

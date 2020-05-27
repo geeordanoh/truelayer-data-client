@@ -3,13 +3,12 @@ package truelayer.data.v1
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import truelayer.data.rest.auth.AuthAPIClient
 import org.junit.Before
 import org.junit.Test
 import truelayer.data.auth.domain.*
 import truelayer.data.rest.v1.V1APIClient
-import truelayer.data.v1.DataAPI
 import truelayer.data.v1.domain.AccessTokenMetaData
+import truelayer.data.v1.domain.Accounts
 import truelayer.data.v1.domain.IdentityInfo
 import kotlin.test.assertEquals
 
@@ -48,6 +47,19 @@ class DataAPITest {
 
         verify(exactly = 1) { v1APIClient.getIdentityInfo(accessToken) }
         assertEquals(result, identityInfo)
+    }
+
+    @Test
+    fun `get accounts`() {
+        val accessToken = buildSomeAccessToken()
+        val accounts = mockk<Accounts>()
+
+        every { v1APIClient.getAccounts(accessToken) } returns accounts
+
+        val result = dataAPI.getAccounts(accessToken)
+
+        verify(exactly = 1) { v1APIClient.getAccounts(accessToken) }
+        assertEquals(result, accounts)
     }
 
     private fun buildSomeAccessToken() = AccessToken("", "", "", "", "")
