@@ -14,10 +14,10 @@ This is currently a work in progress.
 - Retrieve access_token metadata
 - Retrieve identity information
 - List all accounts
-## Todo:
 - Retrieve an account
 - Retrieve account balance
 - Retrieve account transactions
+## Todo:
 - Retrieve account pending transactions
 - Retrieve direct debits
 - Retrieve standing orders

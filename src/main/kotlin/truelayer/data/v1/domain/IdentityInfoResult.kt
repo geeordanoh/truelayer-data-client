@@ -3,7 +3,7 @@ package truelayer.data.v1.domain
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class Accounts(
+data class IdentityInfoResult(
     @JsonProperty("results")
-    val accountsList: List<Account>
+    val identityInfoList: List<IdentityInfo>
 )
