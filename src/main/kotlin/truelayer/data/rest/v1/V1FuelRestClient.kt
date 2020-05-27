@@ -2,9 +2,9 @@ package truelayer.data.rest.v1
 
 import com.github.kittinunf.fuel.core.FuelManager
 import truelayer.data.auth.domain.AccessToken
+import truelayer.data.rest.FuelRestClientCommons
 import truelayer.data.rest.RestClientConfiguration
 import truelayer.data.v1.domain.AccessTokenMetaData
-import truelayer.data.rest.FuelRestClientCommons
 import truelayer.data.v1.domain.Accounts
 import truelayer.data.v1.domain.IdentityInfo
 
@@ -29,16 +29,14 @@ class V1FuelRestClient(restClientConfiguration: RestClientConfiguration) : V1API
     }
 
     override fun getMetaDataFor(accessToken: AccessToken): AccessTokenMetaData {
-        return issueGetRequest(fuelManager, METADATA_URL, Pair("Authorization", "Bearer $accessToken.accessTokenJWT"))
+        return issueGetRequest(fuelManager, METADATA_URL, Pair("Authorization", "Bearer ${accessToken.accessTokenJWT}"))
     }
 
     override fun getIdentityInfo(accessToken: AccessToken): IdentityInfo {
-        return issueGetRequest(fuelManager, INFO_URL, Pair("Authorization", "Bearer $accessToken.accessTokenJWT"))
+        return issueGetRequest(fuelManager, INFO_URL, Pair("Authorization", "Bearer ${accessToken.accessTokenJWT}"))
     }
 
     override fun getAccounts(accessToken: AccessToken): Accounts {
-        return issueGetRequest(fuelManager, ACCOUNTS_URL, Pair("Authorization", "Bearer $accessToken.accessTokenJWT"))
+        return issueGetRequest(fuelManager, ACCOUNTS_URL, Pair("Authorization", "Bearer ${accessToken.accessTokenJWT}"))
     }
-
-
 }
