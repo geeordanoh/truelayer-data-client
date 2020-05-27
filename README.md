@@ -8,11 +8,11 @@ This is currently a work in progress.
 - Delete/Invalidate access token
 - Renew the access token
 - CI
+- List of supported providers
 ## Drafted:
 - Submit access token for debug
-- List of supported providers
-## Todo:
 - Retrieve access_token metadata
+## Todo:
 - Retrieve identity information
 - List all accounts
 - Retrieve an account

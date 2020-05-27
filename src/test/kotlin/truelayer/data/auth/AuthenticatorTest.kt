@@ -51,7 +51,7 @@ class AuthenticatorTest {
 
         authenticator.deleteToken(accessToken)
 
-        verify(exactly = 1) { restClient.deleteToken(accessToken) }
+        verify(exactly = 1) { restClient.delete(accessToken) }
     }
 
     @Test
@@ -73,6 +73,17 @@ class AuthenticatorTest {
         authenticator.getProviders()
 
         verify(exactly = 1) { restClient.getProviders() }
+    }
+
+    @Test
+    fun `get metadata`() {
+        val restClient = mockk<RestClient>(relaxed = true)
+        val accessToken = buildSomeAccessToken()
+        authenticator = Authenticator(credentials, restClient)
+
+        authenticator.getMetaDataFor(accessToken)
+
+        verify(exactly = 1) { restClient.getMetaDataFor(accessToken) }
     }
 
     private fun buildSomeClientCredentials() = ClientCredentials("", "")

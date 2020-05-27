@@ -12,6 +12,7 @@ private const val RETRIEVE_TOKEN_URL = "connect/token"
 private const val DELETE_TOKEN_URL = "api/delete"
 private const val DEBUG_URL = "api/debug"
 private const val PROVIDERS_URL = "api/providers"
+private const val METADATA_URL = "data/v1/me"
 
 class FuelRestClient(restClientConfiguration: RestClientConfiguration) : RestClient {
 
@@ -48,7 +49,7 @@ class FuelRestClient(restClientConfiguration: RestClientConfiguration) : RestCli
         return issuePostRequestWithUrlEncoding(RETRIEVE_TOKEN_URL, request)
     }
 
-    override fun deleteToken(accessToken: AccessToken) {
+    override fun delete(accessToken: AccessToken) {
         issueDeleteRequest(DELETE_TOKEN_URL, Pair("Authorization", "Bearer $accessToken.accessTokenJWT"))
     }
 
@@ -57,6 +58,10 @@ class FuelRestClient(restClientConfiguration: RestClientConfiguration) : RestCli
                 "access_token" to accessToken.accessTokenJWT
         )
         return this.issuePostRequestWithUrlEncoding(DEBUG_URL, request, Pair("Content-Type", "application/json"))
+    }
+
+    override fun getMetaDataFor(accessToken: AccessToken): AccessTokenMetaData {
+        return issueGetRequest(METADATA_URL, Pair("Authorization", "Bearer $accessToken.accessTokenJWT"))
     }
 
     override fun getProviders(): Providers {
