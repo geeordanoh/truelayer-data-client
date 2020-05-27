@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class AccessTokenMetaData(
         @JsonProperty("results")
-        val results: List<Result>
+        val infoResults: List<InfoResult>
 )
 
 data class Result(

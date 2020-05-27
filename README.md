@@ -12,8 +12,8 @@ This is currently a work in progress.
 ## Drafted:
 - Submit access token for debug
 - Retrieve access_token metadata
-## Todo:
 - Retrieve identity information
+## Todo:
 - List all accounts
 - Retrieve an account
 - Retrieve account balance
