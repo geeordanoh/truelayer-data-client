@@ -46,8 +46,10 @@ class V1FuelRestClient(restClientConfiguration: RestClientConfiguration) : V1API
         return issueGetRequest(fuelManager, "$ACCOUNTS_URL/$accountId/balance", Pair("Authorization", "Bearer ${accessToken.accessTokenJWT}"))
     }
 
-    override fun getTransactions(accessToken: AccessToken, accountId: String): TransactionsResult {
-        //TODO(add from to parameters)
-        return issueGetRequest(fuelManager, "$ACCOUNTS_URL/$accountId/transactions", Pair("Authorization", "Bearer ${accessToken.accessTokenJWT}"))
+    override fun getTransactions(accessToken: AccessToken, accountId: String, from: String?, to: String?): TransactionsResult {
+        val parameters = mutableListOf<Pair<String, Any?>>()
+        if (from != null) parameters.add("from" to from)
+        if (to != null) parameters.add("to" to to)
+        return issueGetRequest(fuelManager, "$ACCOUNTS_URL/$accountId/transactions", parameters, Pair("Authorization", "Bearer ${accessToken.accessTokenJWT}"))
     }
 }

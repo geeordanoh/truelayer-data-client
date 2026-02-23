@@ -28,7 +28,7 @@ class DataAPI(
         return V1APIClient.getBalance(accessToken, accountId).balanceList[0]
     }
 
-    fun getTransactions(accountId: String): List<Transaction> {
-        return V1APIClient.getTransactions(accessToken, accountId).transactionList
+    fun getTransactions(accountId: String, from: String? = null, to: String? = null): List<Transaction> {
+        return V1APIClient.getTransactions(accessToken, accountId, from, to).transactionList
     }
 }

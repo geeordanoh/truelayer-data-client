@@ -9,6 +9,6 @@ interface V1APIClient {
     fun getAccounts(accessToken: AccessToken): Accounts
     fun getAccount(accessToken: AccessToken, accountId: String): Accounts
     fun getBalance(accessToken: AccessToken, accountId: String): BalanceResult
-    fun getTransactions(accessToken: AccessToken, accountId: String): TransactionsResult
+    fun getTransactions(accessToken: AccessToken, accountId: String, from: String? = null, to: String? = null): TransactionsResult
 }
 

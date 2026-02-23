@@ -76,4 +76,36 @@ class DataAPITest {
         verify(exactly = 1) { v1APIClient.getAccount(accessToken, id) }
         assertEquals(result, account)
     }
+
+    @Test
+    fun `get transactions without date filter`() {
+        val transactionsResult = mockk<TransactionsResult>()
+        val transactionList = mockk<List<Transaction>>()
+        val id = "fakeid"
+
+        every { v1APIClient.getTransactions(accessToken, id, null, null) } returns transactionsResult
+        every { transactionsResult.transactionList } returns transactionList
+
+        val result = dataAPI.getTransactions(id)
+
+        verify(exactly = 1) { v1APIClient.getTransactions(accessToken, id, null, null) }
+        assertEquals(result, transactionList)
+    }
+
+    @Test
+    fun `get transactions with from and to date filter`() {
+        val transactionsResult = mockk<TransactionsResult>()
+        val transactionList = mockk<List<Transaction>>()
+        val id = "fakeid"
+        val from = "2019-04-01T00:00:00Z"
+        val to = "2019-04-30T23:59:59Z"
+
+        every { v1APIClient.getTransactions(accessToken, id, from, to) } returns transactionsResult
+        every { transactionsResult.transactionList } returns transactionList
+
+        val result = dataAPI.getTransactions(id, from, to)
+
+        verify(exactly = 1) { v1APIClient.getTransactions(accessToken, id, from, to) }
+        assertEquals(result, transactionList)
+    }
 }
